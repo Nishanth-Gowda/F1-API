@@ -46,19 +46,24 @@ Before you begin, ensure you have met the following requirements:
 
    ```sh
    git clone https://github.com/your-username/f1-teams-api.git
+   ```
 
 2. Install dependencies:
 
-``` sh
+    ``` sh
     go get ./...
+    ```
+
 
 3. Build and run the application:
 
-``` sh
+    ``` sh
     go run main.go
+    ```
 
 4. Usage
     **Endpoints**
+
     Here are some of the available endpoints:
 
         ```
@@ -68,6 +73,7 @@ Before you begin, ensure you have met the following requirements:
         PUT /teams/{id}: Update details of a specific Formula 1 team.
         DELETE /teams/{id}: Delete a Formula 1 team.
         PUT /teams/{id}/drivers: Update the list of drivers for a team.
+    ```
 
 
 5. Documentation
