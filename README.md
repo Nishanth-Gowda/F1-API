@@ -11,11 +11,6 @@
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
 - [Usage](#usage)
-  - [Endpoints](#endpoints)
-  - [Authentication](#authentication)
-- [Documentation](#documentation)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Introduction
 
@@ -61,7 +56,7 @@ Before you begin, ensure you have met the following requirements:
     go run main.go
     ```
 
-4. Usage
+## Usage
     **Endpoints**
 
     Here are some of the available endpoints:
@@ -76,12 +71,4 @@ Before you begin, ensure you have met the following requirements:
     ```
 
 
-5. Documentation
-    For detailed API documentation, refer to the API Documentation.
-
-6. Contributing
-    Contributions are welcome! Please follow our Contribution Guidelines.
-
-7. License
-    This project is licensed under the MIT License. See the LICENSE file for details.
 
