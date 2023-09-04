@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>F1 Teams</title>
+      
+        <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+      
+        <style>
+          
+          body {
+            background: linear-gradient(to bottom, #1d1d1d, #3a3a3a);
+            color: #fff;
+            font-family: 'Lato', sans-serif;
+          }
+          
+          h1, h2 {
+            font-family: 'Oswald', sans-serif;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5); 
+          }
+          
+          table {
+            margin: 0 auto;
+            border-collapse: collapse;
+          }
+          
+          th, td {
+            padding: 10px 20px;
+            border: 1px solid #555;
+          }
+      
+          /* Form styles */
+      
+        </style>
+      
+      </head>
+      
+      <body>
+
+<body>
+
+  <h1>F1 Teams</h1>
+  
+  <table>
+    <tr>
+      <th>Rank</th>
+      <th>Name</th>
+      <th>Championships Won</th>
+      <th>Car</th>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>Mercedes</td>
+      <td>8</td>
+      <td>W13</td>
+    </tr>
+    <!-- More rows -->
+  </table>
+
+  <h2>Add a New Team</h2>
+  
+  <form id="newTeamForm">
+    <label>Team Name:</label>
+    <input type="text" name="name">
+
+    <label>Championships Won:</label>
+    <input type="number" name="championships">
+
+    <label>Car Version:</label>
+    <input type="text" name="car">
+
+    <button type="submit">Add Team</button>
+  </form>
+
+  <script>
+    // Get form and add submit event listener
+    const form = document.getElementById('newTeamForm');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      // Get form data  
+      const name = form.elements['name'].value;
+      const championships = form.elements['championships'].value;
+      const car = form.elements['car'].value;
+
+      // POST request to API to add new team
+      fetch('/api/teams', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name, 
+          championships,
+          car 
+        })
+      })
+      .then(response => {
+        // Check response and update page
+        if (response.ok) {
+          location.reload(); 
+        } else {
+          alert('Error adding team');
+        }
+      });
+
+    });
+  </script>
+
+</body>
+</html>
