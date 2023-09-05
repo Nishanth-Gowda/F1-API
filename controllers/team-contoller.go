@@ -1,11 +1,14 @@
 package controllers
 
 import (
+	"encoding/json"
 	"f1/model"
 	"f1/service"
-	"strconv"
+	"io"
 	"log"
 	"net/http"
+	"strconv"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -14,7 +17,7 @@ type F1TeamController interface{
 	Save(ctx *gin.Context) model.F1Team
 	FindById(ctx *gin.Context) model.F1Team
 	DeleteById(ctx *gin.Context) model.F1Team
-	UpdateDriverById(ctx *gin.Context) model.F1Team
+	UpdateDriversById(ctx *gin.Context)
 } 
 
 type f1TeamController struct{
@@ -76,36 +79,43 @@ func (c *f1TeamController) DeleteById(ctx *gin.Context) model.F1Team {
 }
 
 
-func (c *f1TeamController) UpdateDriverById(ctx *gin.Context) model.F1Team {
-    // Get the team ID from the request URL parameter
-    idStr := ctx.Param("id")
+// UpdateDriversById handles updating drivers for a team
+func (c *f1TeamController) UpdateDriversById(ctx *gin.Context) {
 
-    // Convert the ID string to an integer
-    id, err := strconv.Atoi(idStr)
+    // Get team ID from path parameter
+    teamID, err := strconv.Atoi(ctx.Param("id"))
     if err != nil {
-        // Handle the error (e.g., return an error response to the client)
-        ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid team ID"})
-        return model.F1Team{} // Return an empty F1Team
+      ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid team ID"})
+      return
     }
-
-    // Parse the JSON request body to get the new drivers
-    var newDrivers []string
-    if err := ctx.BindJSON(&newDrivers); err != nil {
-        // Handle the error (e.g., return an error response to the client)
-        ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid JSON data"})
-        return model.F1Team{} // Return an empty F1Team
+  
+    // Read request body into raw byte slice
+    reqBody, err := io.ReadAll(ctx.Request.Body)
+    if err != nil {
+      ctx.JSON(http.StatusBadRequest, gin.H{"error": "Error reading request body"})
+      return
     }
-
-    // Call your service's UpdateDrivers function to update the team's drivers
-    updatedTeam := c.service.UpdateDrivers(id, newDrivers)
-
-    // Check if the team was found and updated successfully
+  
+    // Log raw request body
+    log.Printf("Raw request body: %s", string(reqBody))
+  
+    // Unmarshal request body into drivers array
+    var drivers []string
+    if err := json.Unmarshal(reqBody, &drivers); err != nil {
+      ctx.JSON(http.StatusBadRequest, gin.H{"error": "Error unmarshalling JSON"})
+      log.Printf("Unmarshal error: %+v", err)
+      return
+    }
+  
+    // Call service to update drivers
+    updatedTeam := c.service.UpdateDrivers(teamID, drivers)
+  
+    // Check for 404 case
     if updatedTeam.TeamID == 0 {
-        // Handle the case where the team was not found
-        ctx.JSON(http.StatusNotFound, gin.H{"error": "Team not found"})
-        return model.F1Team{} // Return an empty F1Team
+      ctx.JSON(http.StatusNotFound, gin.H{"error": "Team not found"})
+      return 
     }
-
-    // Return the updated team as a response to the client
-    return updatedTeam
-}
+  
+    // Return updated team
+    ctx.JSON(http.StatusOK, updatedTeam)
+  }

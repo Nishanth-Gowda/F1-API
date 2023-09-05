@@ -33,9 +33,8 @@ func main() {
 		ctx.JSON(200, f1TeamController.DeleteById(ctx))
 	})
 
-	router.PUT("/teams/:id", func(ctx *gin.Context) {
-		ctx.JSON(200, f1TeamController.UpdateDriverById(ctx))
-	})
+	router.PUT("/teams/:id", f1TeamController.UpdateDriversById)
+	
 
 	router.GET("/health", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{

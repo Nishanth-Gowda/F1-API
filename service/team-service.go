@@ -51,12 +51,18 @@ func (f1 *f1TeamService) DeleteById(id int) model.F1Team {
 	return team
 }
 
-func (f1 *f1TeamService) UpdateDrivers(id int, drivers []string) model.F1Team{
-	for i, team := range f1.f1teams {
-		if team.TeamID == id {
-			team.Drivers = drivers
-			f1.f1teams[i] = team // Update the team in the slice
-		}
-	}
-	return f1.FindById(id)
+// UpdateDrivers updates the drivers of a Formula 1 team by team ID.
+// It takes the team ID and the new list of drivers as parameters.
+// It returns the updated team or an empty model.F1Team if the team is not found.
+func (f1 *f1TeamService) UpdateDrivers(id int, newDrivers []string) model.F1Team {
+    for i, team := range f1.f1teams {
+        if team.TeamID == id {
+            // Update the team's drivers with the new list
+            team.Drivers = newDrivers
+            f1.f1teams[i] = team // Update the team in the slice
+            return team
+        }
+    }
+    // Team not found, return an empty F1Team
+    return model.F1Team{}
 }

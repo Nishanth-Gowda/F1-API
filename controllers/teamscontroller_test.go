@@ -68,3 +68,32 @@ func TestFindAll(t *testing.T) {
 	
 }
 
+
+func TestFindById(t *testing.T) {
+    // Generate mock Formula 1 teams
+    mockTeams := utils.GenerateMockF1Teams()
+    teamService := service.New()
+    for _, team := range mockTeams {
+        teamService.Save(team)
+        foundTeam := teamService.FindById(team.TeamID)
+        if foundTeam.TeamID != team.TeamID {
+            t.Errorf("Expected TeamID %d, but got %d", team.TeamID, foundTeam.TeamID)
+            return
+        }
+    }
+}
+
+func TestDeleteById(t *testing.T) {
+    // Generate mock Formula 1 teams
+    mockTeams := utils.GenerateMockF1Teams()   
+    teamService := service.New()
+    for _, team := range mockTeams {
+        teamService.Save(team)
+        teamService.DeleteById(team.TeamID)
+        foundTeam := teamService.FindById(team.TeamID)
+        if foundTeam.TeamID != 0 {
+            t.Errorf("Expected TeamID %d, but got %d", team.TeamID, foundTeam.TeamID)
+            return
+        }
+    }
+}
