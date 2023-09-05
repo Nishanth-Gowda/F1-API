@@ -17,8 +17,13 @@ var (
 func main() {
 	router := gin.Default()
 
+	// Configure Gin to load HTML templates
+	router.LoadHTMLGlob("public/*.html")
+
+
+	// Route to serve HTML page
 	router.GET("/home", func(ctx *gin.Context) {
-		ctx.File("./public/index.html")
+    	ctx.HTML(http.StatusOK, "index.html", nil)
 	})
 
 	router.GET("/teams", func(ctx *gin.Context) {
