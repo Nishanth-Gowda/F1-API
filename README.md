@@ -33,7 +33,6 @@ Before you begin, ensure you have met the following requirements:
 
 - Go (at least Go 1.13)
 - Gin framework
-- MySQL or your preferred database
 
 ### Installation
 
