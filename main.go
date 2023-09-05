@@ -17,6 +17,10 @@ var (
 func main() {
 	router := gin.Default()
 
+	router.GET("/home", func(ctx *gin.Context) {
+		ctx.File("./public/index.html")
+	})
+
 	router.GET("/teams", func(ctx *gin.Context) {
 		ctx.JSON(200, f1TeamController.FindAll())
 	})
