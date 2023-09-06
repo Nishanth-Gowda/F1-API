@@ -52,6 +52,6 @@ jobs:
             context: .
             file: ./Dockerfile
             push: true
-            tags: nishanthvish/f1app:latest, nishanthvish/f1app:latest:${{ github.run_number }}
+            tags: nishanthvish/f1app:latest
         
 
