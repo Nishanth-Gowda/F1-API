@@ -43,6 +43,7 @@ jobs:
       - name: Build and push Docker image
         uses: mr-smithers-excellent/docker-build-push@v6.2
         with:
+          image: nishanthvish/f1app
           context: .
           push: true
           tags: nishanthvish/f1app:latest, nishanthvish/f1app:latest:${{github.run_number}}
