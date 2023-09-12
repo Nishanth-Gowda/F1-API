@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: f1app-deployment
+  labels:
+    app: f1app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: f1app
+  template:
+    metadata:
+      labels:
+        app: f1app
+    spec:
+      containers:
+      - name: go-f1app
+        image: nishanthvish/f1app
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3000
