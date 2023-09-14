@@ -13,8 +13,10 @@ jobs:
       - go/load-cache # Load cached Go modules.
       - go/mod-download # Run 'go mod download'.
       - go/save-cache # Save Go modules to cache.
-      - go/test: # Runs 'go test ./...' but includes extensive parameterization for finer tuning.
-          covermode: atomic
+      - run:
+          name: Run Go tests
+          command: |
+            go test ./...
   build_and_push:
     docker:
       - image: cimg/node:20.3.1
