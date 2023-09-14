@@ -28,9 +28,9 @@ jobs:
           command: |
             version="build-$CIRCLE_BUILD_NUM"
             echo $version
-            docker build -t nishanthgowda/f1-app:$version .
+            docker build -t nishanthvish/f1-app:$version .
             echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
-            docker push nishanthgowda/f1-app:$version
+            docker push nishanthvish/f1-app:$version
 
   Update_manifest:
     docker:
