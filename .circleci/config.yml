@@ -50,8 +50,8 @@ jobs:
             cd K8s-manifest
             pwd
             echo $TAG
-            sed -i "s/build-.*/build-$TAG/g" manifests/deployment.yaml
-            cat manifests/deployment.yaml
+            sed -i "s/build-.*/build-$TAG/g" manifests/deployment.yml
+            cat manifests/deployment.yml
             git add .
             git commit -m "new build with imgTag build-$TAG"
             git config credential.helper 'cache --timeout=120'
